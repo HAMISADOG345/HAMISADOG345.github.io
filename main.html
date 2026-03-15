@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6H3WPQVTX0"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="BRUH" property="og:title">
+    <title>main</title>
+    <style>
+        :root {
+
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --border: #2f3031;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+            --gradient-primary: linear-gradient(135deg, #9d9d9d0a 0%, #9d9d9d0a 100%);
+            --glass: rgb(66, 65, 65);
+        }
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+        }
+        header {
+            background: var(--gradient-primary);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+        .header-content {
+            max-width: 1200px; margin: 0 auto; padding: 1.25rem 1rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+        }
+        .logo {
+            font-size: 1.75rem; font-weight: 800;
+            text-decoration: none;
+        }
+        #SearchBar {
+            flex: 1; padding: 0.875rem 1rem; border: 0;
+            border-radius: var(--radius); background: var(--glass);
+            color:var(--border); font-size: 15px; outline: none; max-width: 500px;
+        }
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            margin: 0;
+        }
+         .links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            margin: 0;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            height: 300;
+            width: 250;
+            background: var(--card);
+            border-radius: 12px;
+            background-color: var(--surface);
+            box-shadow: #000000;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none; display: flex; flex-direction: column;
+            transition: all 0.4s;
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl); border-color: var(--primary);
+        }
+        .card img { width: 0%; aspect-ratio: 1; object-fit: cover; }
+        .title {
+            color: var(--text); padding: 1.25rem 1rem; font-weight: 600;
+            font-size: 14px; text-align: center; flex-grow: 1;
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+<header>
+        <div class="header-content">
+            <a href="toilet.html" class="logo">BRUH.github.io</a>
+            <input type="text" id="SearchBar" placeholder="Search..." onkeyup="filter" />
+                <nav class="links">
+                <a href="toilet.html">toilet.html</a>
+                <a href="">under construction</a>
+                <a href="proxE.html">BANANA</a>
+                </nav>
+        </div>
+    </header>
+</head>
+<body>
+    <main>
+        <div class="container" id="Container">
+    </main>
+    <script>
+        let list = [
+            { id: '', href: 'information.html', imgSrc: '', title: 'SEARCH NOT WORKING' },
+            { id: '', href: 'minecraftLaunchPage.html', imgSrc: '', title: 'Minecraft' },
+            { id: '', href: 'timeShooter.html', imgSrc: '', title: 'Time Shooter', onclick: '' },
+            { id: '', href: 'snow-rider-3d/snow-rider.html', imgSrc: '', title: 'Snow Rider' },
+            { id: '', href: 'geometry-libary.html', imgSrc: '', title: 'Geometry Dash' },
+            { id: '', href: 'cookieclicker/cookie.html', imgSrc: '', title: 'Cookie Clicker' },
+            { id: '', href: 'knights.html', imgSrc: '', title: 'war the knights' },
+            { id: '', href: 'dadish-page.html', imgSrc: '', title: 'dadish' },
+            { id: '', href: 'clusterrush/cluster.html', imgSrc: '', title: 'cluster rush' },
+            { id: '', href: 'bitlife/bitLife.html', imgSrc: '', title: 'bit life' },
+            { id: '', href: 'amongus/amongus.html', imgSrc: '', title: 'among us web' },
+            { id: '', href: 'amazingropepolice/amazingstrangeropepolice.html', imgSrc: '', title: 'amazing strange rope police' },
+            { id: '', href: 'pandemic2/pandemic2.html', imgSrc: '', title: 'plague inc web' },
+            { id: '', href: 'papermario/papermario.html', imgSrc: '', title: 'paper mario' },
+            { id: '', href: 'retrobowl/rb.html', imgSrc: '', title: 'retro bowl' },
+            { id: '', href: 'https://gitallgames.github.io/projects/slope/index.html', imgSrc: '', title: 'slope' },
+            { id: '', href: 'paperio.html', imgSrc: '', title: 'paper io' },
+            { id: '', href: 'run.html', imgSrc: '', title: 'run' },
+            { id: '', href: 'motox3m-page.html', imgSrc: '', title: 'motox3m' },
+        ];
+        function display() {
+            const container = document.getElementById('Container');
+            list.forEach(game => {
+                const card = document.createElement('a');
+                card.href = game.href;
+                card.className = 'card';
+                card.id = game.id;
+                
+                if (game.onclick) {
+                    card.setAttribute('onclick', game.onclick);
+                }
+
+                card.innerHTML = `
+                    <div><h1 class = "title">${game.title}</h1></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', display);
+
+        function filterGames() {
+            const query = document.getElementById('SearchBar').value.toLowerCase();
+            document.querySelectorAll('.card').forEach(card => {
+                const cardId = card.id.toLowerCase();
+                const cardTitle = card.querySelector('.title').textContent.toLowerCase();
+                card.style.display = (cardId.includes(query) || cardTitle.includes(query)) ? 'flex' : 'none';
+            });
+        }
+
+    </script>
+</body>
+
+</html>
+

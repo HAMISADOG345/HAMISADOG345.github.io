@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title">ur r a bannana</title>
+    <meta name="title" content="BRUH" property="og:title">
+    <style>
+        p {
+            background-image: url();
+        }
+        :root {
+            
+            --primary:
+            --primary-hover:
+            --text: #f1f5f9;
+            --bg: #0f172a;
+            --text-muted: #94a3b8;
+            --surface: #1e293b;
+            --border: #334155;
+            --radius: 12px;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+            --gradient-primary: linear-gradient(135deg, #3f3a3b 0%, #3f383a 100%);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+            color: var(--text);
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            overflow: hidden;
+        }
+        .access-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: rgb(185, 176, 176);
+            margin: 0 0 0.5rem;
+        }
+        p {
+            color: var(--text-muted);
+            margin: 0 0 2rem;
+        }
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #invite-code {
+            flex-grow: 1;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        #invite-code:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 28, 29, 0.25);
+        }
+        #submit-btn {
+            background: var(--gradient-primary);
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.875rem 1.5rem;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        #myIframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 9999;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="access-container">
+        <h1>Password</h1>
+        <div class="input-group">
+            <input type="text" id="invite-code" placeholder="enter code NOW">
+            <button id="submit-btn"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+    
+    <iframe id="myIframe" src="aboutBlank.html"></iframe>
+
+    <script>
+        const validCodes = ["67?"];
+        const adminCodes = ["1234"];
+  
+        if (localStorage.getItem("accessGranted") === "true") {
+            if (!window.location.pathname.endsWith("blocked.html")) {
+                 window.location.replace("toilet.html");
+            }
+        } else {
+            if (!window.location.pathname.endsWith("blocked.html")) {
+                window.location.href = "blocked.html";
+            }
+        }
+
+        const inviteCodeInput = document.getElementById('invite-code');
+        const submitBtn = document.getElementById('submit-btn');
+        const errorMessage = document.getElementById('error-message');
+        const iframe = document.getElementById('myIframe');
+
+        function checkInviteCode() {
+            const inputCode = inviteCodeInput.value.trim();
+
+            if (validCodes.includes(inputCode)) {
+                localStorage.setItem("accessGranted", "true");
+                window.location.href = "toilet.html"; 
+            } else if (inputCode === "") {
+                return;
+            } else {
+               window.location.herf = "aboutBlank.html";
+            }
+        }
+
+        submitBtn.addEventListener('click', checkInviteCode);
+        inviteCodeInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkInviteCode();
+            }
+        });
+        function checkAdminCode() {
+            const inputCode = inviteCodeInput.value.trim();
+
+            if (adminCodes.includes(inputCode)) {
+                localStorage.setItem("accessGranted", "true");
+                window.location.href = "admin.html"; 
+            } else if (inputCode === "") {
+                return;
+            } else {
+               window.location.herf = "aboutBlank.html";
+            }
+        }
+
+        submitBtn.addEventListener('click', checkAdminCode);
+        inviteCodeInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkAdminCode();
+            }
+        });
+        
+        function toggleFullscreen() {
+            iframe.style.visibility = 'visible';
+            if (iframe.requestFullscreen) iframe.requestFullscreen();
+            else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+            else if (iframe.mozRequestFullscreen) iframe.mozRequestFullscreen();
+            else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+        }
+
+        window.addEventListener('message', function(event) {
+            if (event.data === 'sequenceFinished') {
+                if (document.fullscreenElement) document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                iframe.style.visibility = 'hidden';
+                iframe.contentWindow.postMessage('resetSequence', '*');
+            }
+        });
+    </script>
+</body>
+</html>
