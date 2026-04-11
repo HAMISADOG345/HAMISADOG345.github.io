@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { margin: 0; background: #000000; overflow: hidden; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+        #tap { 
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 15px; background: #333; border-radius: 0 0 4px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="tap"></div>
+    <canvas id="glCanvas"></canvas>
+
+    <script type="x-shader/x-fragment" id="fragmentShader">
+        precision mediump float;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform vec3 u_particles[80]; // Increased particle array
+
+        void main() {
+            vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+            float ratio = u_resolution.x / u_resolution.y;
+            vec2 pos = uv;
+            pos.x *= ratio;
+
+            float intensity = 0.0;
+            
+            for (int i = 0; i < 80; i++) {
+                vec2 pPos = u_particles[i].xy / u_resolution.xy;
+                pPos.x *= ratio;
+                float dist = distance(pos, pPos);
+                // Faster falloff (pow 3.0) and smaller numerator makes particles "thinner"
+                intensity += 0.00015 / pow(dist, 2.5); 
+            }
+
+            vec3 color = vec3(0.0);
+            
+            // The Dash-style threshold
+            if (intensity > 1.5) {
+                color = vec3(0.0, 0.8, 1.0); // Neon Cyan
+                
+                // Scrolling streaks
+                float streaks = sin(uv.y * 50.0 + u_time * 15.0);
+                if (streaks > 0.85) color += 0.4;
+                
+                // Thin white rim for that Geometry Dash vector look
+                if (intensity < 1.7) color = vec3(1.0);
+            }
+
+            gl_FragColor = vec4(color, intensity > 1.0 ? 1.0 : 0.0);
+        }
+    </script>
+
+    <script>
+        const canvas = document.getElementById('glCanvas');
+        const gl = canvas.getContext('webgl');
+
+        // More particles, smaller movements
+        const particles = Array.from({ length: 80 }, () => ({
+            x: window.innerWidth / 2,
+            y: -100, // Start off-screen
+            vx: 0, vy: 0
+        }));
+
+        function updatePhysics() {
+            particles.forEach((p, i) => {
+                p.vy -= 0.07; // Higher gravity for a faster stream
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Loop particles with a slight delay so they don't all fall at once
+                if (p.y < -1) {
+                    p.x = window.innerWidth / 2 + (Math.random() - 0.5) * 4; // Tightened spawn
+                    p.y = window.innerHeight;
+                    p.vx = (Math.random() - 0.5) * 2; 
+                    p.vy = -Math.random() * 3;
+                }
+            });
+        }
+
+        const vertSource = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
+        const fragSource = document.getElementById('fragmentShader').text;
+        
+        function createShader(gl, type, source) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, source);
+            gl.compileShader(s);
+            return s;
+        }
+
+        const program = gl.createProgram();
+        gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vertSource));
+        gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fragSource));
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+        const posAttrib = gl.getAttribLocation(program, "position");
+        gl.enableVertexAttribArray(posAttrib);
+        gl.vertexAttribPointer(posAttrib, 2, gl.FLOAT, false, 0, 0);
+
+        const uParts = gl.getUniformLocation(program, "u_particles");
+        const uRes = gl.getUniformLocation(program, "u_resolution");
+        const uTime = gl.getUniformLocation(program, "u_time");
+
+        function render(time) {
+            updatePhysics();
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            
+            const flatData = new Float32Array(particles.flatMap(p => [p.x, p.y, 1.0]));
+            gl.uniform3fv(uParts, flatData);
+            gl.uniform2f(uRes, canvas.width, canvas.height);
+            gl.uniform1f(uTime, time * 0.001);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 30);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>
